@@ -28,7 +28,7 @@ def create_app(test_config=None):
 
 
     @app.route('/pitches',methods=['GET'])
-    def get_pitches(payload):
+    def get_pitches():
         pitches = Pitches.query.all()
         
         return jsonify({
