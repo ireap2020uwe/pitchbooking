@@ -28,7 +28,6 @@ def create_app(test_config=None):
 
 
     @app.route('/pitches',methods=['GET'])
-    @requires_auth('get:pitch')
     def get_pitches(payload):
         pitches = Pitches.query.all()
         
