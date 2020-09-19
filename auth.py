@@ -6,7 +6,7 @@ from jose import jwt
 from urllib.request import urlopen
 
 
-AUTHO_DOMAIN = 'xiaojun.eu.auth0.com'  ###needs modification
+AUTHO_DOMAIN = 'xiaojun.eu.auth0.com'  # needs modification
 ALGORITHMS = ['RS256']
 API_AUDIENCE = 'pitchbooking'
 
@@ -17,6 +17,8 @@ A standardized way to communicate auth failure modes
 '''
 
 token = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Inh0RTIwbm1FQWtuZnNTQ1l2NVpRQiJ9.eyJpc3MiOiJodHRwczovL3hpYW9qdW4uZXUuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVmNGQwMzY1NTkzNTgwMDA2NzU0YTM1YyIsImF1ZCI6InBpdGNoYm9va2luZyIsImlhdCI6MTYwMDUwOTY3MCwiZXhwIjoxNjAwNTgxNjcwLCJhenAiOiJzT0hZSTZwYTBUZG11MWVYTnpxOVliNkNTUkhRcHUxcyIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOnBpdGNoIiwiZ2V0OnBpdGNoIiwicGF0Y2g6cGl0Y2giLCJwb3N0OmJvb2tpbmciLCJwb3N0OnBpdGNoZXMiXX0.EtL6BkyBEDXCieuTZESlNPBhElAQ6Em6ZnZBU1VyApE9_fqoN8k1JmiuE9cbwO6Kc7I6Yl17AaPIe0YCBnD9rm7bXNUOu0oyozaEsQfCT5EQgKTYYaEkN5hZdWIntNtMpxs_7ZVVggsU9bWAo_q2NA1qCnNJOk9D-l_Mbql-ulkNasNUpxz4IywZN8CUhckfEzQND9XvVJBbdckC_vAvRxDJvMqTR01Glq_iFJ5teEie_Z4KL5uC7J5_dW4ZOm7Az-AWVffgqPgBGAZcX7P85tJEASa7LwduMJXZkGBatBaAVV7kGfoJ6_7mFTFJTaQ05huzODh6IpELLA6Bu9TtVQ"
+
+
 class AuthError(Exception):
     def __init__(self, error, status_code):
         self.error = error
@@ -36,12 +38,11 @@ class AuthError(Exception):
 
 
 def get_token_auth_header():
-    auth_header=token
-    #auth_header = request.headers.get("Authorization", None)
+    auth_header = request.headers.get("Authorization", None)
 
     if not auth_header:
         raise AuthError({'code': 'authorization_header_missing',
-                         'description':'Authorization header is expected'}, 401)
+                         'description': 'Authorization header is expected'}, 401)
 
     header_parts = auth_header.split(' ')
 
@@ -57,9 +58,6 @@ def get_token_auth_header():
             'description': 'Authorization header must start with Bearer'}, 401)
 
     return header_parts[1]
-
-
-
 
 
 '''
@@ -108,12 +106,10 @@ def check_permissions(permission, payload):
 def verify_decode_jwt(token):
     # Get public key from Auth0
     jsonurl = urlopen(f'https://xiaojun.eu.auth0.com/.well-known/jwks.json')
-   
     jwks = json.loads(jsonurl.read())
 
     # Get the data in the header
     unverified_header = jwt.get_unverified_header(token)
-
     # Auth0 token should have a key id
     rsa_key = {}
     if 'kid' not in unverified_header:
@@ -121,8 +117,6 @@ def verify_decode_jwt(token):
             'code': 'invalid_header',
             'description': 'Authorization malformed.'
         }, 401)
-
-    
 
     for key in jwks['keys']:
         if key['kid'] == unverified_header['kid']:
@@ -196,9 +190,10 @@ def requires_auth(permission=''):
             jwt = get_token_auth_header()
             try:
                 payload = verify_decode_jwt(jwt)
-            except:
+            except Exception:
                 abort(401)
             return f(payload, *args, **kwargs)
-            check_permissions(permission,payload)
+            check_permissions(permission, payload)
         return wrapper
     return requires_auth_decorator
+    
