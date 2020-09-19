@@ -4,7 +4,6 @@ from sqlalchemy import Column, String, create_engine, Integer, DateTime, Numeric
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 #from app import app
-#database_path=os.environ.get('DATABASE_URL',"postgres://{}:{}@{}/{}".format(database_setup["user_name"],database_setup["password"],database_setup["port"],database_setup["database_name_test"]))
 #database_path= "postgres://postgres@localhost:5432/pitchbooking"
 database_path="postgres://ophjtzvvuijlgd:b6be3f24a4954b3af0e42926508f7e1cac00c3f90c3f123199ba0597a46ad590@ec2-3-214-4-151.compute-1.amazonaws.com:5432/d1faggmdefrcoh"
 db = SQLAlchemy()
@@ -69,8 +68,7 @@ class Pitches(db.Model):
     #postcode = Column(String)
     address = Column(String)
     owner_id = Column(Integer, nullable= False)
-    #booking_relationship = db.relationship('Bookings', backref='pitches',lazy=True)
-
+    
     def insert(self):
         db.session.add(self)
         db.session.commit()
