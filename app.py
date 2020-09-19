@@ -77,7 +77,7 @@ def create_app(test_config=None):
 
 
     @app.route('/pitches',methods=['POST'])
-    @requires_auth('post:pitches')
+    @requires_auth('post:pitch')
     
     def post_pitch(payload):
         req=request.get_json()
