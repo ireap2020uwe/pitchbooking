@@ -43,7 +43,7 @@ def create_app(test_config=None):
         try:
             pitch = Pitches.query.filter(Pitches.id == id).one_or_none()
             pit = pitch.format()
-        except:
+        except BaseException:
             abort(422)
 
         return jsonify({'success':True,
@@ -84,12 +84,12 @@ def create_app(test_config=None):
         try:
             
             n_pitch = Pitches()
-            n_pitch.name = 'Harry'
-            n_pitch.id = 100
-            n_pitch.address = 'Harry'
-            # pitch.name = req['Pitch_name']
-            # pitch.id = req['Pitch_id']
-            # pitch.address = req['Pitch_address']
+            # n_pitch.name = 'Harry'
+            # n_pitch.id = 100
+            # n_pitch.address = 'Harry'
+            n_pitch.name = req['Pitch_name']
+            n_pitch.id = req['Pitch_id']
+            n_pitch.address = req['Pitch_address']
             #pitch=Pitches(owner_id=owner_id, pitch_name= pitch_name, pitch_address=pitch_address)
             n_pitch.insert()
         #pitches=Pitches.query.all()
