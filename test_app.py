@@ -5,6 +5,9 @@ from flask_sqlalchemy import SQLAlchemy
 from models import setup_db, Bookings, Pitches
 from app import create_app
 
+token_name_one = os.environ['PITCH_MANAGER']  
+token_name_two = os.environ['CUSTOMER']
+headers={'Authorization': 'Bearer ' + str(token_name_one)}
 
 class PitchbookingTestCase(unittest.TestCase):
     "This class represents the pitch booking test case"
@@ -34,7 +37,7 @@ class PitchbookingTestCase(unittest.TestCase):
             'customer_id': 20,
             'pitch_id': 1,
             'booking_fee': 100}
-                    
+
     def tearDown(self):
         "Executed after reach test"
         pass

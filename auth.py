@@ -6,18 +6,15 @@ from jose import jwt
 from urllib.request import urlopen
 
 
-AUTHO_DOMAIN = 'xiaojun.eu.auth0.com'  # needs modification
-ALGORITHMS = ['RS256']
-API_AUDIENCE = 'pitchbooking'
+AUTH0_DOMAIN = os.environ.get('AUTH0_DOMAIN')
+ALGORITHMS = os.environ.get['ALGORITHMS']
+API_AUDIENCE = os.environ.get('API_AUDIENCE')
 
 # AuthError Exception
 '''
 AuthError Exception
 A standardized way to communicate auth failure modes
 '''
-
-token = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Inh0RTIwbm1FQWtuZnNTQ1l2NVpRQiJ9.eyJpc3MiOiJodHRwczovL3hpYW9qdW4uZXUuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVmNGQwMzY1NTkzNTgwMDA2NzU0YTM1YyIsImF1ZCI6InBpdGNoYm9va2luZyIsImlhdCI6MTYwMDUwOTY3MCwiZXhwIjoxNjAwNTgxNjcwLCJhenAiOiJzT0hZSTZwYTBUZG11MWVYTnpxOVliNkNTUkhRcHUxcyIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOnBpdGNoIiwiZ2V0OnBpdGNoIiwicGF0Y2g6cGl0Y2giLCJwb3N0OmJvb2tpbmciLCJwb3N0OnBpdGNoZXMiXX0.EtL6BkyBEDXCieuTZESlNPBhElAQ6Em6ZnZBU1VyApE9_fqoN8k1JmiuE9cbwO6Kc7I6Yl17AaPIe0YCBnD9rm7bXNUOu0oyozaEsQfCT5EQgKTYYaEkN5hZdWIntNtMpxs_7ZVVggsU9bWAo_q2NA1qCnNJOk9D-l_Mbql-ulkNasNUpxz4IywZN8CUhckfEzQND9XvVJBbdckC_vAvRxDJvMqTR01Glq_iFJ5teEie_Z4KL5uC7J5_dW4ZOm7Az-AWVffgqPgBGAZcX7P85tJEASa7LwduMJXZkGBatBaAVV7kGfoJ6_7mFTFJTaQ05huzODh6IpELLA6Bu9TtVQ"
-
 
 class AuthError(Exception):
     def __init__(self, error, status_code):
@@ -196,4 +193,3 @@ def requires_auth(permission=''):
             check_permissions(permission, payload)
         return wrapper
     return requires_auth_decorator
-    
